@@ -1,1 +1,1 @@
-# precomm-api
+A simple command-line application.
