@@ -1,3 +1,7 @@
-void main(List<String> arguments) {
-  print('Hello world!');
+import '../internal/external/server/server.dart';
+
+void main() {
+  final server = Server();
+  server.Run();
 }
+
