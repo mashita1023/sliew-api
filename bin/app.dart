@@ -1,7 +1,9 @@
 import '../internal/external/server/server.dart';
 
-void main() {
+void main() async {
   final server = Server();
-  server.Run();
+  await server.run();
+
+  print(server.server.runtimeType);
 }
 
