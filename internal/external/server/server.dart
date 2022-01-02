@@ -7,7 +7,11 @@ import 'router.dart';
 class Server {
 
   var server;
-  
+  var service;
+
+  Server(service) {
+    this.service = service;
+  }
   run() async{
     final handler = _handler();
     final server = await shelf_io.serve(handler, 'localhost', 8080);
@@ -16,7 +20,6 @@ class Server {
   }
 
   _handler() {
-    final service = Service();
     final pipeline = Pipeline().addMiddleware(logRequests()).addHandler(service.handler);
 
     return pipeline;

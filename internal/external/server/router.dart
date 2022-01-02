@@ -6,6 +6,12 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import '../../interface/controller/health_controller.dart';
 
 class Service {
+  var healthController;
+
+  Service(healthController) {
+    this.healthController = healthController;
+  }
+
   Handler get handler {
     final router = Router();
 
