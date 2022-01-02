@@ -9,9 +9,8 @@ class Server {
   var server;
   var service;
 
-  Server(service) {
-    this.service = service;
-  }
+  Server(this.service);
+  
   run() async{
     final handler = _handler();
     final server = await shelf_io.serve(handler, 'localhost', 8080);
