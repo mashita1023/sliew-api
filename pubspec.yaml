@@ -8,9 +8,12 @@ environment:
 
 
 dependencies:
-   path: ^1.8.0
-   shelf: ^1.1.4
-   shelf_router: ^1.0.0
+  path: ^1.8.0
+  shelf: ^1.1.4
+  shelf_router: ^1.0.0
+  mysql1: ^0.19.2
 
 dev_dependencies:
   lints: ^1.0.0
+  args: ^2.3.0
+  intl: ^0.17.0
