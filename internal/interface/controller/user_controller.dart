@@ -9,10 +9,9 @@ class UserController {
 
   UserController(this.statusResponse, this.userUsecase);
   
-  getUser(Request request, String id) {
-    print(statusResponse);
+  getUser(Request request, String id) async{
     try {
-      User user = userUsecase.getUser(request.context, int.parse(id));
+      User user = await userUsecase.getUser(request.context, int.parse(id));
 
       String json = user.encode;
       return statusResponse.responseOK(json);
