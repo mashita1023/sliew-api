@@ -20,10 +20,10 @@ class Mysql implements Database{
     this.conn = await MySqlConnection.connect(settings);
   }
 
-  Future<User> select() async{
-    var result = await this.conn.query('SELECT * FROM users');
-    print(result);
-    User user = User(1, "taro hanako");
+  Future<User> select(ctx, sql) async{
+    var result = await this.conn.query(sql);
+    var data = result.first;
+    User user = User(data['id'], data['name']);
     return user;
   }
 }

@@ -8,10 +8,12 @@ class UserRepositoryImpl implements UserRepository {
   
   UserRepositoryImpl(this.database);
 
-  Future<User> getUsers() async {
-    var user = await database.select();
+  Future<User> getUser(ctx, id) async {
+    String sql = '''
+SELECT * FROM users WHERE id=${id}
+''';
+    var user = await database.select(ctx, sql);
 
-    User test = User(1, "hanako");
     return user;
   }
 }

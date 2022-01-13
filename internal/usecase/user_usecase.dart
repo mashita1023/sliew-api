@@ -7,7 +7,7 @@ class UserUsecase {
   UserUsecase(this.userRepository);
 
   Future<User> getUser(ctx, int id) async {
-    User user = await userRepository.getUsers();
+    User user = await userRepository.getUser(ctx, id);
     return user;
   }
 }

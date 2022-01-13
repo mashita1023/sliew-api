@@ -1,5 +1,5 @@
 import '../../../entity/user.dart';
 
 abstract class Database {
-  Future<User> select();
+  Future<User> select(ctx, sql);
 }
