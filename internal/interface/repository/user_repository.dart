@@ -12,8 +12,20 @@ class UserRepositoryImpl implements UserRepository {
     String sql = '''
 SELECT * FROM users WHERE id=${id}
 ''';
-    var user = await database.select(ctx, sql);
+    var data = await database.single(ctx, sql);
 
+    User user = User(data['id'], data['name']);
     return user;
+  }
+
+  Future<int> insertUser(ctx, name) async {
+    print("repository");
+    String sql = '''
+INSERT INTO users (name) VALUES ("$name");
+''';
+
+    var data = await database.insert(ctx, sql);
+
+    return data["id"];
   }
 }

@@ -4,5 +4,5 @@ class User {
 
   User(this.id, this.name);
 
-  String get encode => '{id: $id, name: $name}';
+  String get encode => '{"id": $id, "name": "$name"}';
 }

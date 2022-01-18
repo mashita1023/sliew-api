@@ -13,8 +13,9 @@ class UserApi {
   Router get router {
     final router = Router();
     print("user router's controller is ${controller.runtimeType}");
-//    router.get('/', controller.getUser);
+
     router.get('/<id>', controller.getUser);
+    router.post('/post', controller.insertUser);
 
     return router;
   }

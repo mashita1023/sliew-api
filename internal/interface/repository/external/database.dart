@@ -1,5 +1,6 @@
 import '../../../entity/user.dart';
 
 abstract class Database {
-  Future<User> select(ctx, sql);
+  Future<Map<String, dynamic>> single(ctx, sql);
+  Future<Map<String, dynamic>> insert(ctx, sql);
 }
