@@ -14,18 +14,53 @@ SELECT * FROM users WHERE id=${id}
 ''';
     var data = await database.single(ctx, sql);
 
-    User user = User(data['id'], data['name']);
+    User user = User(
+      data['id'],
+      data['name'],
+      data['created_at'].toString(),
+      data['updated_at'].toString(),
+      data['deleted_at'].toString()
+    );
     return user;
   }
 
-  Future<int> insertUser(ctx, name) async {
-    print("repository");
+  Future<User> insertUser(ctx, name) async {
     String sql = '''
-INSERT INTO users (name) VALUES ("$name");
+INSERT INTO users (name) VALUES ("$name") returning *;
 ''';
 
     var data = await database.insert(ctx, sql);
+    if (data["id"] == 0) {
+      print("error at UserRepository.insertUser");
+    }
 
-    return data["id"];
+    User user = User(
+      data["id"],
+      data["name"],
+      data["created_at"].toString(),
+      data["updated_at"].toString(),
+      data["deleted_at"].toString()
+    );
+    return user;
   }
+
+  Future<User> updateUser(ctx, user) async {
+    String sql = '''
+UPDATE users SET name="${user.name}" WHERE id=${user.id};
+''';
+    String returningSQL = '''
+SELECT * FROM users WHERE id=${user.id};
+''';
+
+    var data = await database.update(ctx, sql, returningSQL);
+    User resultUser = User(
+      data["id"],
+      data["name"],
+      data["created_at"].toString(),
+      data["updated_at"].toString(),
+      data["deleted_at"].toString()
+    );
+    return resultUser;
+  }
+
 }

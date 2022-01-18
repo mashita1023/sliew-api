@@ -2,5 +2,6 @@ import '../../entity/export.dart';
 
 abstract class UserRepository {
   Future<User> getUser(ctx, id);
-  Future<int> insertUser(ctx, name);
+  Future<User> insertUser(ctx, name);
+  Future<User> updateUser(ctx, user);
 }

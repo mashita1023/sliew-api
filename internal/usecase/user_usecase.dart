@@ -11,16 +11,22 @@ class UserUsecase {
     return user;
   }
 
-  Future<User> insertUser(ctx, name) async {
-    print("usecase & $name");
-    int id = await userRepository.insertUser(ctx, name);
-    User user = User(id, name);
-
-    User resultUser = await userRepository.getUser(ctx, id);
-    if (user.name != resultUser.name) {
-      print('error');
-    }
-
+  Future<User> insertUser(ctx, String name) async {
+    User user = await userRepository.insertUser(ctx, name);
     return user;
+  }
+
+  Future<User> updateUser(ctx, User req) async {
+    User test = await userRepository.getUser(ctx, req.id);
+    if (req.name == test.name) {
+      throw Exception('request name is same.');
+    }
+    User user = await userRepository.updateUser(ctx, req);
+
+    if (test.updatedAt == user.updatedAt) {
+      throw Exception('cant updated');
+    }
+    return user;
+
   }
 }

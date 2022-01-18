@@ -41,4 +41,27 @@ class UserController {
       return statusResponse.responseBadRequest("Bad Request\n$st");
     }
   }
+
+  updateUser(Request request) async {
+    try {
+      final body = await request.readAsString();
+      final params = jsonDecode(body);
+
+      if (params['id'] == null) {
+        throw Exception('id params does not exist');
+      }
+      
+      if (params['name'] == null) {
+        throw Exception('name params does not exist');
+      }
+
+      User user = await userUsecase.updateUser(request.context, User(params["id"], params["name"]));
+
+      String json = user.encode;
+      return statusResponse.responseOK(json);
+    } on Exception catch(e, st) {
+      print(e);
+      return statusResponse.responseBadRequest("Bad Request\n$st");
+    }
+  }
 }

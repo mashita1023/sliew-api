@@ -27,9 +27,14 @@ class Mysql implements Database{
   }
 
   Future<Map<String, dynamic>> insert(ctx, sql) async {
-    print(sql);
+    var result = await conn.query(sql);
+    var data = result.first.fields;
+    return data;
+  }
+
+  Future<Map<String, dynamic>> update(ctx, sql, getSQL) async {
     await conn.query(sql);
-    var result = await conn.query("SELECT LAST_INSERT_ID() AS id;");
+    var result = await conn.query(getSQL);
     var data = result.first.fields;
     return data;
   }
