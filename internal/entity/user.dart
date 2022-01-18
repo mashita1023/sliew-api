@@ -15,6 +15,8 @@ class User {
     ]
   );
 
+  bool get isDeleted => deletedAt != 'null';
+
   String get encode => '''
 {
   "id": $id,
@@ -24,5 +26,6 @@ class User {
 }
   ''';
 
-  bool get isDeleted => deletedAt != 'null';
+  String get encodeDeleted => '{"success": $isDeleted}';
+
 }

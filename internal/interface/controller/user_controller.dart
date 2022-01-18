@@ -64,4 +64,23 @@ class UserController {
       return statusResponse.responseBadRequest("Bad Request\n$st");
     }
   }
+
+  deleteUser(Request request) async {
+    try {
+      final body = await request.readAsString();
+      final params = jsonDecode(body);
+
+      if (params['id'] == null) {
+        throw Exception('id params does not exist');
+      }
+
+      User user = await userUsecase.deleteUser(request.context, User(params["id"], params["name"]));
+
+      String json = user.encodeDeleted;
+      return statusResponse.responseOK(json);
+    } on Exception catch(e, st) {
+      print(e);
+      return statusResponse.responseBadRequest("Bad Request\n$st");
+    }
+  }
 }

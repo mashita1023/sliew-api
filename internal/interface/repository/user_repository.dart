@@ -63,4 +63,22 @@ SELECT * FROM users WHERE id=${user.id};
     return resultUser;
   }
 
+  Future<User> deleteUser(ctx, user) async {
+    String sql = '''
+UPDATE users SET deleted_at=NOW() WHERE id=${user.id};
+''';
+    String returningSQL = '''
+SELECT * FROM users WHERE id=${user.id};
+''';
+
+    var data = await database.update(ctx, sql, returningSQL);
+    User resultUser = User(
+      data["id"],
+      data["name"],
+      data["created_at"].toString(),
+      data["updated_at"].toString(),
+      data["deleted_at"].toString()
+    );
+    return resultUser;
+  }
 }

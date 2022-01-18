@@ -13,6 +13,7 @@ class UserApi {
     router.get('/<id>', controller.getUser);
     router.post('/insert', controller.insertUser);
     router.post('/update', controller.updateUser);
+    router.post('/delete', controller.deleteUser);
 
     return router;
   }

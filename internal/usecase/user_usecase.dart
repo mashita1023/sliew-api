@@ -27,6 +27,10 @@ class UserUsecase {
       throw Exception('cant updated');
     }
     return user;
+  }
 
+  Future<User> deleteUser(ctx, User req) async {
+    User user = await userRepository.deleteUser(ctx, req);
+    return user;
   }
 }
