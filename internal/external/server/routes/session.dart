@@ -1,16 +1,15 @@
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-class UserApi {
+class SessionApi {
   var controller;
 
-  UserApi(this.controller);
-  
-  Router get router {
+  SessionApi(this.controller);
+
+    Router get router {
     final router = Router();
     print("user router's controller is ${controller.runtimeType}");
 
-    router.get('/', controller.getUsers);
     router.get('/<id>', controller.getUser);
     router.post('/', controller.insertUser);
     router.put('/', controller.updateUser);
@@ -19,3 +18,4 @@ class UserApi {
     return router;
   }
 }
+

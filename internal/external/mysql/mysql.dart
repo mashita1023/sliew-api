@@ -20,6 +20,18 @@ class Mysql implements Database{
     this.conn = await MySqlConnection.connect(settings);
   }
 
+  Future<List<Map<String, dynamic>>> get(ctx, sql) async {
+    var results = await this.conn.query(sql);
+    List resultsList = results.toList();
+    List<Map<String, dynamic>> list = [];
+
+    resultsList.forEach((result) {
+        list.add(result.fields);
+    });
+
+    return list;
+  }
+
   Future<Map<String, dynamic>> single(ctx, sql) async{
     var result = await this.conn.query(sql);
     var data = result.first.fields;

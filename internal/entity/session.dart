@@ -1,13 +1,17 @@
-class User {
+class Session {
   int id;
-  String name;
+  String title;
+  String description;
+  int userID;
   String createdAt;
   String updatedAt;
   String deletedAt;
 
-  User(
+  Session(
     this.id,
-    this.name,
+    this.title,
+    this.description,
+    this.userID,
     [
       this.createdAt = '',
       this.updatedAt = '',
@@ -20,17 +24,14 @@ class User {
   String get encode => '''
 {
   "id": $id,
-  "name": "$name",
+  "title": "$title",
+  "description": "$description",
+  "user_id": $userID,
   "created_at": "$createdAt",
-  "updated_at": "$updatedAt",
+  "updated_at": "$updatedAt"
 }
-  ''';
+''';
 
-  Map<String, dynamic> get toMap => {
-    'id': id,
-    'name': name,
-    'created_at': createdAt,
-    'updated_at': updatedAt,
-  };
+  String get encodeDeleted => '{"success": $isDeleted}';
 
 }

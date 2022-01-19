@@ -8,6 +8,29 @@ class UserRepositoryImpl implements UserRepository {
   
   UserRepositoryImpl(this.database);
 
+  Future<List<User>> getUsers(ctx) async {
+    String sql = '''
+SELECT * FROM users;
+''';
+
+    List<Map<String, dynamic>> data = await database.get(ctx, sql);
+    List<User> list = [];
+
+    data.forEach((d) {
+        list.add(
+          User(
+            d['id'],
+            d['name'],
+            d['created_at'].toString(),
+            d['updated_at'].toString(),
+            d['deleted_at'].toString(),
+          ),
+        );
+    });
+
+    return list;
+  }
+  
   Future<User> getUser(ctx, id) async {
     String sql = '''
 SELECT * FROM users WHERE id=${id}
