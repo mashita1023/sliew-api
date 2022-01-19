@@ -24,6 +24,7 @@ class StatusResponse {
       400,
       body: body,
       headers: {
+        'Content-Type': 'application/json',
         ...corsHeaders,
       },
     );

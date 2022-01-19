@@ -17,8 +17,15 @@ class UserController {
       
     } on Exception catch(e, st) {
       print(e);
-//      print(st);
-      return statusResponse.responseBadRequest("Bad Request\n$st");
+      //      print(st);
+      print(e.runtimeType);
+      var json = jsonEncode({"message": e.toString()});
+      return statusResponse.responseBadRequest(json);
+    } on Error catch(e, st) {
+      print(e.runtimeType);
+      var json = jsonEncode({"message": e.toString()});
+      return statusResponse.responseBadRequest(json);
+
     }
   }
 
@@ -33,10 +40,12 @@ class UserController {
       var json = jsonEncode(list);
       return statusResponse.responseOK(json);
       
-    } on Exception catch(e, st) {
+      //    } on Exception catch(e, st) {
+    } catch(e, st) {
       print(e);
-//      print(st);
-      return statusResponse.responseBadRequest("Bad Request\n$st");
+      //      print(st);
+      var json = jsonEncode({"message": e.toString()});
+      return statusResponse.responseBadRequest(json);
     }
   }
 
@@ -54,9 +63,11 @@ class UserController {
 
       var json = jsonEncode(user.toMap);
       return statusResponse.responseOK(json);
-    } on Exception catch(e, st) {
+      //    } on Exception catch(e, st) {
+    } catch(e, st) {
       print(e);
-      return statusResponse.responseBadRequest("Bad Request\n$st");
+      var json = jsonEncode({"message": e.toString()});      
+      return statusResponse.responseBadRequest(json);
     }
   }
 
@@ -77,9 +88,11 @@ class UserController {
 
       String json = jsonEncode(user.toMap);
       return statusResponse.responseOK(json);
-    } on Exception catch(e, st) {
+      //    } on Exception catch(e, st) {
+    } catch(e, st) {
       print(e);
-      return statusResponse.responseBadRequest("Bad Request\n$st");
+      var json = jsonEncode({"message": e.toString()});
+      return statusResponse.responseBadRequest(json);
     }
   }
 
@@ -93,9 +106,11 @@ class UserController {
       Map map = {'success': user.isDeleted};
       String json = jsonEncode(map);
       return statusResponse.responseOK(json);
-    } on Exception catch(e, st) {
+      //    } on Exception catch(e, st) {
+    } catch(e, st) {
       print(e);
-      return statusResponse.responseBadRequest("Bad Request\n$st");
+      var json = jsonEncode({"message": e.toString()});
+      return statusResponse.responseBadRequest(json);
     }
   }
 }
