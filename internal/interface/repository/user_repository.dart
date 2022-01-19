@@ -10,7 +10,7 @@ class UserRepositoryImpl implements UserRepository {
 
   Future<List<User>> getUsers(ctx) async {
     String sql = '''
-SELECT * FROM users;
+SELECT * FROM users WHERE deleted_at=null;
 ''';
 
     List<Map<String, dynamic>> data = await database.get(ctx, sql);
@@ -33,7 +33,7 @@ SELECT * FROM users;
   
   Future<User> getUser(ctx, id) async {
     String sql = '''
-SELECT * FROM users WHERE id=${id}
+SELECT * FROM users WHERE id=${id} AND deleted_at=null;
 ''';
     var data = await database.single(ctx, sql);
 

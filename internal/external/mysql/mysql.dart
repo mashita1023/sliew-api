@@ -25,6 +25,10 @@ class Mysql implements Database{
     List resultsList = results.toList();
     List<Map<String, dynamic>> list = [];
 
+    if (resultsList.length == 0) {
+      throw Exception("Bad state: No element");
+    }
+    
     resultsList.forEach((result) {
         list.add(result.fields);
     });
