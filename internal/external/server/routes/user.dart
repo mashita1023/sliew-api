@@ -6,15 +6,14 @@ class UserApi {
 
   UserApi(this.controller);
   
-  Future<Response> _messages(Request request) async {
-    return Response.ok('[]');
-  }
-
   Router get router {
     final router = Router();
     print("user router's controller is ${controller.runtimeType}");
-//    router.get('/', controller.getUser);
+
     router.get('/<id>', controller.getUser);
+    router.post('/insert', controller.insertUser);
+    router.post('/update', controller.updateUser);
+    router.post('/delete', controller.deleteUser);
 
     return router;
   }
