@@ -21,17 +21,13 @@ class Session {
 
   bool get isDeleted => deletedAt != 'null';
 
-  String get encode => '''
-{
-  "id": $id,
-  "title": "$title",
-  "description": "$description",
-  "user_id": $userID,
-  "created_at": "$createdAt",
-  "updated_at": "$updatedAt"
-}
-''';
-
-  String get encodeDeleted => '{"success": $isDeleted}';
+  Map get toMap => {
+    'id': id,
+    'title': title,
+    'description': description,
+    'user_id': userID,
+    'created_at': createdAt,
+    'updated_at': updatedAt,
+  };
 
 }

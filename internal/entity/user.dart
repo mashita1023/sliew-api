@@ -17,15 +17,6 @@ class User {
 
   bool get isDeleted => deletedAt != 'null';
 
-  String get encode => '''
-{
-  "id": $id,
-  "name": "$name",
-  "created_at": "$createdAt",
-  "updated_at": "$updatedAt",
-}
-  ''';
-
   Map<String, dynamic> get toMap => {
     'id': id,
     'name': name,

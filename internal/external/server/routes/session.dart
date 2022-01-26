@@ -10,10 +10,11 @@ class SessionApi {
     final router = Router();
     print("user router's controller is ${controller.runtimeType}");
 
-    router.get('/<id>', controller.getUser);
-    router.post('/', controller.insertUser);
-    router.put('/', controller.updateUser);
-    router.delete('/<id>', controller.deleteUser);
+    router.get('/', controller.getSessions);
+    router.get('/<id>', controller.getSession);
+    router.post('/', controller.insertSession);
+    router.put('/', controller.updateSession);
+    router.delete('/<id>', controller.deleteSession);
 
     return router;
   }
