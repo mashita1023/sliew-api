@@ -6,4 +6,5 @@ abstract class SessionRepository {
   Future<Session> insertSession(ctx, Session req);
   Future<Session> updateSession(ctx, Session session);
   Future<Session> deleteSession(ctx, Session session);
+  Future<List<Session>> getSessionByUserID(ctx, Session session);
 }

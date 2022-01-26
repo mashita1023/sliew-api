@@ -39,4 +39,12 @@ class SessionUsecase {
     Session session = await sessionRepository.deleteSession(ctx, req);
     return session;
   }
+
+  Future<List<Session>> getSessionByUserID(ctx, Session req) async {
+    List<Session> sessions = await sessionRepository.getSessionByUserID(
+      ctx,
+      req
+    );
+    return sessions;
+  }
 }

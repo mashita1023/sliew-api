@@ -15,6 +15,7 @@ class SessionApi {
     router.post('/', controller.insertSession);
     router.put('/', controller.updateSession);
     router.delete('/<id>', controller.deleteSession);
+    router.get('/user/<id>', controller.getSessionByUserID);
 
     return router;
   }

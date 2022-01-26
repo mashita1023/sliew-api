@@ -149,4 +149,37 @@ SELECT * FROM sessions WHERE id=${session.id};
     );
     return resultSession;
   }
+
+  Future<List<Session>> getSessionByUserID(ctx, session) async {
+    String sql = '''
+SELECT
+  *
+FROM 
+  sessions
+WHERE
+  deleted_at IS NULL
+AND
+  user_id=${session.userID};
+''';
+
+    List<Map<String, dynamic>> data = await database.get(ctx, sql);
+    List<Session> list = [];
+
+    data.forEach((d) {
+        list.add(
+          Session(
+            d['id'],
+            d['title'],
+            d['description'].toString(),
+            d['user_id'],
+            d['created_at'].toString(),
+            d['updated_at'].toString(),
+            d['deleted_at'].toString(),
+          ),
+        );
+    });
+
+    return list;
+  }
+
 }
