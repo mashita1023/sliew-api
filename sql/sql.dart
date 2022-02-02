@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS ${name} (
 );
 ''');
     dropFile.writeAsString('DROP TABLE IF EXISTS ' + name + ';');
+  
     print(create);
     print(drop);
 

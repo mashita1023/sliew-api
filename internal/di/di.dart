@@ -14,13 +14,17 @@ initializeServer() async{
   final statusResponse = StatusResponse();
   final database = Mysql();
   await database.connect();
+
   final userRepository = UserRepositoryImpl(database);
-  final userUsecase = UserUsecase(userRepository);
+  final sessionRepository = SessionRepositoryImpl(database);
+
+  final userUsecase = UserUsecase(userRepository, sessionRepository);
+  final sessionUsecase = SessionUsecase(sessionRepository);
+
   final healthController = HealthController();
   final userController = UserController(statusResponse, userUsecase);
-  final sessionRepository = SessionRepositoryImpl(database);
-  final sessionUsecase = SessionUsecase(sessionRepository);
   final sessionController = SessionController(statusResponse, sessionUsecase);
+
   final service = Service(healthController, userController, sessionController);
   final server = Server(service);
 
