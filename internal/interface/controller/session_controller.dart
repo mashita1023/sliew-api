@@ -3,16 +3,19 @@ import 'package:shelf/shelf.dart';
 
 import '../../entity/export.dart';
 
-class UserController {
+class SessionController {
   var statusResponse;
-  var userUsecase;
+  var sessionUsecase;
 
-  UserController(this.statusResponse, this.userUsecase);
+  SessionController(this.statusResponse, this.sessionUsecase);
   
-  getUser(Request request, String id) async{
+  getSession(Request request, String id) async{
     try {
-      User user = await userUsecase.getUser(request.context, int.parse(id));
-      var json = jsonEncode(user.toMap);
+      Session session = await sessionUsecase.getSession(
+        request.context,
+        int.parse(id)
+      );
+      var json = jsonEncode(session.toMap);
       return statusResponse.responseOK(json);
       
     } on Exception catch(e, st) {
@@ -29,13 +32,13 @@ class UserController {
     }
   }
 
-  getUsers(Request request) async{
+  getSessions(Request request) async{
     try {
-      List<User> users = await userUsecase.getUsers(request.context);
+      List<Session> sessions = await sessionUsecase.getSessions(request.context);
 
       List<Map> list = [];
-      users.forEach((user) {
-          list.add(user.toMap);
+      sessions.forEach((session) {
+          list.add(session.toMap);
       });
       var json = jsonEncode(list);
       return statusResponse.responseOK(json);
@@ -50,18 +53,36 @@ class UserController {
   }
 
 
-  insertUser(Request request) async {
+  insertSession(Request request) async {
     try {
       final body = await request.readAsString();
       final params = jsonDecode(body);
 
-      if (params['name'] == null) {
-        throw Exception('name params does not exist');
+      if (params['title'] == null) {
+        throw Exception('title params does not exist');
       }
 
-      User user = await userUsecase.insertUser(request.context, params["name"]);
+      if (params['description'] == null) {
+        throw Exception('description params does not exist');
+      }
 
-      var json = jsonEncode(user.toMap);
+      if (params['user_id'] == null) {
+        throw Exception('user_id params does not exist');
+      }
+
+      Session req = Session(
+        0,
+        params['title'],
+        params['description'],
+        params['user_id'],
+      );
+
+      Session session = await sessionUsecase.insertSession(
+        request.context,
+        req
+      );
+
+      var json = jsonEncode(session.toMap);
       return statusResponse.responseOK(json);
       //    } on Exception catch(e, st) {
     } catch(e, st) {
@@ -71,7 +92,7 @@ class UserController {
     }
   }
 
-  updateUser(Request request) async {
+  updateSession(Request request) async {
     try {
       final body = await request.readAsString();
       final params = jsonDecode(body);
@@ -80,13 +101,31 @@ class UserController {
         throw Exception('id params does not exist');
       }
       
-      if (params['name'] == null) {
-        throw Exception('name params does not exist');
+      if (params['title'] == null) {
+        throw Exception('title params does not exist');
       }
 
-      User user = await userUsecase.updateUser(request.context, User(params["id"], params["name"]));
+      if (params['description'] == null) {
+        throw Exception('description params does not exitst.');
+      }
 
-      String json = jsonEncode(user.toMap);
+      if (params['user_id'] == null) {
+        throw Exception('user_id params dows not exist.');
+      }
+
+      Session req = Session(
+        params['id'],
+        params['title'],
+        params['description'],
+        params['user_id'],
+      );
+
+      Session session = await sessionUsecase.updateSession(
+        request.context,
+        req
+      );
+
+      String json = jsonEncode(session.toMap);
       return statusResponse.responseOK(json);
       //    } on Exception catch(e, st) {
     } catch(e, st) {
@@ -96,14 +135,22 @@ class UserController {
     }
   }
 
-  deleteUser(Request request, String id) async {
+  deleteSession(Request request, String id) async {
     try {
       final body = await request.readAsString();
       final params = jsonDecode(body);
 
-      User user = await userUsecase.deleteUser(request.context, User(int.parse(id), ""));
+      Session session = await sessionUsecase.deleteSession(
+        request.context,
+        Session(
+          int.parse(id),
+          "",
+          "",
+          0
+        )
+      );
 
-      Map map = {'success': user.isDeleted};
+      Map map = {'success': session.isDeleted};
       String json = jsonEncode(map);
       return statusResponse.responseOK(json);
       //    } on Exception catch(e, st) {
@@ -114,33 +161,4 @@ class UserController {
     }
   }
 
-  getSessionByUserID(Request request, String id) async {
-    try {
-      final body = await request.readAsString();
-      final params = jsonDecode(body);
-
-      List<Session> sessions = await userUsecase.getSessionByUserID(
-        request.context,
-        Session(
-          0,
-          "",
-          "",
-          int.parse(id)
-        )
-      );
-
-      List<Map> list = [];
-      sessions.forEach((session) {
-          list.add(session.toMap);
-      });
-
-      String json = jsonEncode(list);
-      return statusResponse.responseOK(json);
-      //    } on Exception catch(e, st) {
-    } catch(e, st) {
-      print(e);
-      var json = jsonEncode({"message": e.toString()});
-      return statusResponse.responseBadRequest(json);
-    }
-  }
 }

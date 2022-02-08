@@ -1,13 +1,17 @@
-class User {
+class Session {
   int id;
-  String name;
+  String title;
+  String description;
+  int userID;
   String createdAt;
   String updatedAt;
   String deletedAt;
 
-  User(
+  Session(
     this.id,
-    this.name,
+    this.title,
+    this.description,
+    this.userID,
     [
       this.createdAt = '',
       this.updatedAt = '',
@@ -17,9 +21,11 @@ class User {
 
   bool get isDeleted => deletedAt != 'null';
 
-  Map<String, dynamic> get toMap => {
+  Map get toMap => {
     'id': id,
-    'name': name,
+    'title': title,
+    'description': description,
+    'user_id': userID,
     'created_at': createdAt,
     'updated_at': updatedAt,
   };

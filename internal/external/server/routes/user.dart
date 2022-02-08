@@ -10,10 +10,12 @@ class UserApi {
     final router = Router();
     print("user router's controller is ${controller.runtimeType}");
 
+    router.get('/', controller.getUsers);
     router.get('/<id>', controller.getUser);
-    router.post('/insert', controller.insertUser);
-    router.post('/update', controller.updateUser);
-    router.post('/delete', controller.deleteUser);
+    router.get('/<id>/session', controller.getSessionByUserID);
+    router.post('/', controller.insertUser);
+    router.put('/', controller.updateUser);
+    router.delete('/<id>', controller.deleteUser);
 
     return router;
   }

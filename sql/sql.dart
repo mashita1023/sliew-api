@@ -43,13 +43,14 @@ run(name) {
   
     createFile.writeAsString('''
 CREATE TABLE IF NOT EXISTS ${name} (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at DATETIME
 );
 ''');
     dropFile.writeAsString('DROP TABLE IF EXISTS ' + name + ';');
+  
     print(create);
     print(drop);
 
